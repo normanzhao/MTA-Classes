@@ -6,23 +6,10 @@
 #include <vector>
 #include <stack>
 #include <queue>
+
+#include "distanceClass.h";
 using namespace std;
 
-double degrad(double d) {
-	const double PI = 2 * acos(0.0);
-	return d * PI / 180;
-}
-//modified to return miles
-double haverdist(double lat1, double longit1, double lat2, double longit2)
-{
-	double r = 6371;
-	double dlat = degrad(lat2 - lat1);
-	double dlongit = degrad(longit2 - longit1);
-	double a = sin(dlat / 2)*sin(dlat / 2) +
-		cos(degrad(lat1))*cos(degrad(lat2))*sin(dlongit / 2)*sin(dlongit / 2);
-	double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-	return r*c*0.621371;
-}
 const int DEFAULT_VAL = -1;      // must be less than 0
 const string STANDARD_VAL = "";
 
@@ -184,7 +171,8 @@ public:
 		isSubwayStopNearX(double longitude, double latitute, double d) :checkLong(longitude), checkLat(latitute), distance(d) {}
 		bool operator()(const trainStopData& tSD)
 		{
-			if (haverdist(checkLat, checkLong, tSD.get_latitude(), tSD.get_longitude()) <= distance)
+			distanceClass dist;
+			if (dist.haverdist(checkLat, checkLong, tSD.get_latitude(), tSD.get_longitude()) <= distance)
 			{
 				return true;
 			}
@@ -212,6 +200,7 @@ public:
 	//calculate distance between 2 stops
 	double stopDistance(string id1, string id2)
 	{
+		distanceClass dist;
 		trainStopData stop1, stop2;
 		stop1 = find(id1);
 		stop2 = find(id2);
@@ -219,7 +208,7 @@ public:
 		{
 			return 0;
 		}
-		return haverdist(stop1.get_latitude(), stop1.get_longitude(), stop2.get_latitude(), stop2.get_longitude());
+		return dist.haverdist(stop1.get_latitude(), stop1.get_longitude(), stop2.get_latitude(), stop2.get_longitude());
 	}
 	//calculate distance of a route
 	double routeDistance(char route)
@@ -244,7 +233,8 @@ public:
 		{
 			return 0;
 		}
-		return haverdist(stop1.get_latitude(), stop1.get_longitude(), stop2.get_latitude(), stop2.get_longitude());
+		distanceClass dist;
+		return dist.haverdist(stop1.get_latitude(), stop1.get_longitude(), stop2.get_latitude(), stop2.get_longitude());
 	}
 	//shortest route
 	typedef unordered_map < string, list<string>> Graph;        // The graph is given in an adjacency list.
@@ -341,5 +331,5 @@ int main()
 {
 	MTAData mtad;
 	mtad.planRoute();
-	return 0
+	return 0;
 }
