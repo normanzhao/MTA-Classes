@@ -156,6 +156,9 @@
     <ClInclude Include="MTAData.h" />
     <ClInclude Include="trainStopData.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\Downloads\MTA_train_stop_data.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
