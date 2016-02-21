@@ -17,9 +17,21 @@
     <ClCompile Include="distanceClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="trainStopData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MTAData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distanceClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trainStopData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MTAData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

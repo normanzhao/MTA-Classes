@@ -147,10 +147,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="distanceClass.cpp" />
+    <ClCompile Include="MTAData.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="trainStopData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distanceClass.h" />
+    <ClInclude Include="MTAData.h" />
+    <ClInclude Include="trainStopData.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
