@@ -98,7 +98,15 @@ unordered_map<string, list<string>> MTAData::makeList()
 	return adjList;
 }
 //return data based on data string
-trainStopData MTAData::find(string stop)
+trainStopData MTAData::search()
+{
+	
+}
+trainStopData MTAData::findName(string stop)
+{
+
+}
+trainStopData MTAData::findID(string stop)
 {
 	for (trainStopData tSD : vtSD)
 	{
@@ -186,8 +194,8 @@ double MTAData::stopDistance(string id1, string id2)
 {
 	distanceClass dist;
 	trainStopData stop1, stop2;
-	stop1 = find(id1);
-	stop2 = find(id2);
+	stop1 = findID(id1);
+	stop2 = findID(id2);
 	if (stop1.get_id() == stop2.get_id() || (stop1.get_id() == "") || (stop2.get_id() == ""))
 	{
 		return 0;
@@ -300,9 +308,9 @@ void MTAData::planRoute()
 	cout << "2: ";
 	cin >> stop2;
 	cout << endl << "Stop 1 information: ";
-	pTSI(find(stop1));
+	pTSI(findID(stop1));
 	cout << endl << "Stop 2 information: ";
-	pTSI(find(stop2));
+	pTSI(findID(stop2));
 	cout << endl << "Distance between the two stops: " << stopDistance(stop1, stop2) << " mile(s)";
 	cout << endl << "Estimated travel time: " << travelTime(stopDistance(stop1, stop2)) << " minute(s)" << endl;
 }

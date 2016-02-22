@@ -19,7 +19,9 @@ public:
 	vector<trainStopData> getData();
 	unordered_map<string, list<string>> makeList();
 	//return data based on data string
-	trainStopData find(string stop);
+	trainStopData search();
+	trainStopData findID(string stop);
+	trainStopData findName(string stop);
 	//check if stop in enroute 
 	class isStopOnRoute;
 	//check if stopID exist and is a legitimate stop
