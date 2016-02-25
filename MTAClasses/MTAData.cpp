@@ -6,7 +6,7 @@
 #include <vector>
 #include <stack>
 #include <queue>
-
+#include <string>
 #include "distanceClass.h";
 #include "trainStopData.h";
 
@@ -110,16 +110,14 @@ trainStopData MTAData::search()
 			string stop;
 			if (choice == 1)
 			{
-				cout << "Stop name: ";
+				cout << "Stop name(case sensitive): ";
 				cin >> stop;
-				cout << findName(stop).get_stop_name();
 				return findName(stop);
 			}
 			else
 			{
 				cout << "Stop ID: ";
 				cin >> stop;
-				cout << findID(stop).get_stop_name();
 				return findID(stop);
 			}
 		}
@@ -128,27 +126,73 @@ trainStopData MTAData::search()
 }
 trainStopData MTAData::findName(string stop)
 {
+	vector<trainStopData> tSDv;
+	trainStopData returntSD;
 	for (trainStopData tSD : vtSD)
 	{
-		if (tSD.get_stop_name() == stop)
+		if (tSD.get_stop_name().find(stop) != string::npos)
 		{
-			return tSD;
+			tSDv.push_back(tSD);
 		}
 	}
-	trainStopData invalid("Invalid stop name", "", 0, 0);
-	return invalid;
+	if (tSDv.size() == 0)
+	{
+		returntSD = trainStopData("99999", "99999", 0, 0);
+	}
+	else if (tSDv.size() == 1)
+	{
+		returntSD = tSDv[0];
+	}
+	else
+	{
+		for (size_t x = 0; x < tSDv.size(); x++)
+		{
+			cout << endl << x << ". " << tSDv[x].get_id() << "  " << tSDv[x].get_stop_name();
+		}
+		int choice = tSDv.size();
+		while (choice > tSDv.size()-1)
+		{
+			cout << endl << endl << "Please select a stop using the numberpad: ";
+			cin >> choice;
+			returntSD = tSDv[choice];
+		}
+	}
+	return returntSD;
 }
 trainStopData MTAData::findID(string stop)
 {
+	vector<trainStopData> tSDv;
+	trainStopData returntSD;
 	for (trainStopData tSD : vtSD)
 	{
-		if (tSD.get_id() == stop)
+		if (tSD.get_id().find(stop) != string::npos)
 		{
-			return tSD;
+			tSDv.push_back(tSD);
 		}
 	}
-	trainStopData invalid("Invalid stop ID", "", 0, 0);
-	return invalid;
+	if (tSDv.size() == 0)
+	{
+		returntSD = trainStopData("99999", "99999", 0, 0);
+	}
+	else if (tSDv.size() == 1)
+	{
+		returntSD = tSDv[0];
+	}
+	else
+	{
+		for (size_t x = 0; x < tSDv.size(); x++)
+		{
+			cout << endl << x << ". " << tSDv[x].get_id() << "  " << tSDv[x].get_stop_name();
+		}
+		int choice = tSDv.size();
+		while (choice > tSDv.size() - 1)
+		{
+			cout << endl << endl << "Please select a stop using the numberpad: ";
+			cin >> choice;
+			returntSD = tSDv[choice];
+		}
+	}
+	return returntSD;
 }
 //check if stop in enroute 
 class MTAData::isStopOnRoute
