@@ -4,6 +4,6 @@ using namespace std;
 int main()
 {
 	MTAData mtad;
-	mtad.planRoute();
+	mtad.search();
 	return 0;
 }

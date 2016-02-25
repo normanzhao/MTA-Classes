@@ -100,11 +100,43 @@ unordered_map<string, list<string>> MTAData::makeList()
 //return data based on data string
 trainStopData MTAData::search()
 {
-	
+	cout << "Search by stop name of ID?\n1. Stop name\n2. Stop ID\n";
+	int choice = 0;
+	while (choice == 0)
+	{
+		cin >> choice;
+		if (choice != 1 || choice != 2)
+		{
+			string stop;
+			if (choice == 1)
+			{
+				cout << "Stop name: ";
+				cin >> stop;
+				cout << findName(stop).get_stop_name();
+				return findName(stop);
+			}
+			else
+			{
+				cout << "Stop ID: ";
+				cin >> stop;
+				cout << findID(stop).get_stop_name();
+				return findID(stop);
+			}
+		}
+		choice == 0;
+	}
 }
 trainStopData MTAData::findName(string stop)
 {
-
+	for (trainStopData tSD : vtSD)
+	{
+		if (tSD.get_stop_name() == stop)
+		{
+			return tSD;
+		}
+	}
+	trainStopData invalid("Invalid stop name", "", 0, 0);
+	return invalid;
 }
 trainStopData MTAData::findID(string stop)
 {
