@@ -1,9 +1,8 @@
-#include "MTAData.h"
+#include "Console.h"
 using namespace std;
 
 int main()
 {
-	MTAData mtad;
-	mtad.search();
+	Console console;
 	return 0;
 }

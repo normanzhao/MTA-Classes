@@ -105,23 +105,24 @@ trainStopData MTAData::search()
 	while (choice == 0)
 	{
 		cin >> choice;
-		if (choice != 1 || choice != 2)
+		if (choice == 1 || choice == 2)
 		{
 			string stop;
 			if (choice == 1)
 			{
-				cout << "Stop name(case sensitive): ";
+				cout << endl << "Stop name(case sensitive): ";
 				cin >> stop;
 				return findName(stop);
 			}
 			else
 			{
-				cout << "Stop ID: ";
+				cout << endl << "Stop ID: ";
 				cin >> stop;
 				return findID(stop);
 			}
 		}
-		choice == 0;
+		choice = 0;
+		cout << "Invalid input, please try again: ";
 	}
 }
 trainStopData MTAData::findName(string stop)
@@ -137,7 +138,8 @@ trainStopData MTAData::findName(string stop)
 	}
 	if (tSDv.size() == 0)
 	{
-		returntSD = trainStopData("99999", "99999", 0, 0);
+		cout << "\nInvalid stop name. Please try again.\n";
+		return search();
 	}
 	else if (tSDv.size() == 1)
 	{
@@ -172,7 +174,8 @@ trainStopData MTAData::findID(string stop)
 	}
 	if (tSDv.size() == 0)
 	{
-		returntSD = trainStopData("99999", "99999", 0, 0);
+		cout << "\nInvalid stop id. Please try again.\n";
+		return search();
 	}
 	else if (tSDv.size() == 1)
 	{
@@ -266,12 +269,9 @@ double MTAData::travelTime(double distance)
 	return (27 / distance) / 60;
 }
 //calculate distance between 2 stops
-double MTAData::stopDistance(string id1, string id2)
+double MTAData::stopDistance(trainStopData stop1, trainStopData stop2)
 {
 	distanceClass dist;
-	trainStopData stop1, stop2;
-	stop1 = findID(id1);
-	stop2 = findID(id2);
 	if (stop1.get_id() == stop2.get_id() || (stop1.get_id() == "") || (stop2.get_id() == ""))
 	{
 		return 0;
@@ -377,16 +377,16 @@ void MTAData::shortestpaths(const Graph & g, string from, string to)
 //route planner
 void MTAData::planRoute()
 {
-	string stop1, stop2;
+	trainStopData stop1, stop2;
 	printTrainStopInfo pTSI;
-	cout << "Please enter two stops to plan a route for\n1: ";
-	cin >> stop1;
-	cout << "2: ";
-	cin >> stop2;
+	cout << "\nFirst stop: \n\n";
+	stop1 = search();
+	cout << "\nSecond stop: \n\n";
+	stop2 = search();
 	cout << endl << "Stop 1 information: ";
-	pTSI(findID(stop1));
+	pTSI(stop1);
 	cout << endl << "Stop 2 information: ";
-	pTSI(findID(stop2));
+	pTSI(stop2);
 	cout << endl << "Distance between the two stops: " << stopDistance(stop1, stop2) << " mile(s)";
 	cout << endl << "Estimated travel time: " << travelTime(stopDistance(stop1, stop2)) << " minute(s)" << endl;
 }

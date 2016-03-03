@@ -33,7 +33,7 @@ public:
 	//train travel time in minutes
 	double travelTime(double distance);
 	//calculate distance between 2 stops
-	double stopDistance(string id1, string id2);
+	double stopDistance(trainStopData stop1, trainStopData stop2);
 	//calculate distance of a route
 	double routeDistance(char route);
 	//shortest route
