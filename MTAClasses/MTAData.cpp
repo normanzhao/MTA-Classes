@@ -15,7 +15,7 @@ using namespace std;
 
 const int DEFAULT_VAL = -1;      // must be less than 0
 const string STANDARD_VAL = "";
-
+distanceClass dist;
 //get data
 vector<trainStopData> MTAData::getData()
 {
@@ -242,7 +242,6 @@ public:
 	isSubwayStopNearX(double longitude, double latitute, double d) :checkLong(longitude), checkLat(latitute), distance(d) {}
 	bool operator()(const trainStopData& tSD)
 	{
-		distanceClass dist;
 		if (dist.haverdist(checkLat, checkLong, tSD.get_latitude(), tSD.get_longitude()) <= distance)
 		{
 			return true;
@@ -271,7 +270,7 @@ double MTAData::travelTime(double distance)
 //calculate distance between 2 stops
 double MTAData::stopDistance(trainStopData stop1, trainStopData stop2)
 {
-	distanceClass dist;
+	
 	if (stop1.get_id() == stop2.get_id() || (stop1.get_id() == "") || (stop2.get_id() == ""))
 	{
 		return 0;
@@ -281,7 +280,7 @@ double MTAData::stopDistance(trainStopData stop1, trainStopData stop2)
 //calculate distance of a route
 double MTAData::routeDistance(char route)
 {
-	distanceClass dist;
+	
 	trainStopData stop1, stop2;
 	for (size_t i = 0; i < vtSD.size(); i++)
 	{
@@ -374,6 +373,69 @@ void MTAData::shortestpaths(const Graph & g, string from, string to)
 		}
 	}
 }
+//map route
+void MTAData::mapRoute()
+{
+	list<char> routes = { '1', '2', '3', '4', '5', '6', '7', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'L', 'M', 'N', 'R', 'S' };
+	bool loop = true;
+	char choice;
+	while (loop == true)
+	{
+		cout << "Please enter in a route: ";
+		cin >> choice;
+		for (char letter : routes)
+		{
+			if (choice == letter)
+			{
+				loop = false;
+			}
+		}
+	}
+	MTAData::isStopOnRoute iSOR(choice);
+	cout << endl << endl;
+	for (trainStopData tSD : vtSD)
+	{
+		int x = 1;
+		if (iSOR(tSD))
+		{
+			cout << x << ". " << tSD.get_stop_name() << endl;
+			x++;
+		}
+	}
+	cout << endl;
+}
+//lookup stop
+void MTAData::stopLookup()
+{
+	printTrainStopInfo pTSI;
+	trainStopData tSD;
+	tSD = search();
+	cout << endl << endl;
+	pTSI(tSD);
+	cout << endl;
+}
+void MTAData::stopProx()
+{
+	double lon, lat, dis;
+	cout << "Please enter in a longitude: ";
+	cin >> lon;
+	cout << "Please enter in a latidude: ";
+	cin >> lat;
+	cout << "Please enter in a distance: ";
+	cin >> dis;
+	isSubwayStopNearX iSSNX(lon,lat,dis);
+	trainStopData tSD = search();
+	if (iSSNX(tSD))
+	{
+		cout << "This stop is within " << dis << " miles of " << lon << "," << lat << "." << endl;
+	}
+	else
+	{
+		cout << "This stop is not within " << dis << " miles of " << lon << "," << lat << "." << endl;
+		cout << "It is " << dist.haverdist(tSD.get_latitude(), tSD.get_longitude(), lat, lon) - dis << " actually about miles further away"<< endl;
+	}
+
+}
 //route planner
 void MTAData::planRoute()
 {
@@ -383,9 +445,9 @@ void MTAData::planRoute()
 	stop1 = search();
 	cout << "\nSecond stop: \n\n";
 	stop2 = search();
-	cout << endl << "Stop 1 information: ";
+	cout << endl << "Stop 1 information: " << endl;
 	pTSI(stop1);
-	cout << endl << "Stop 2 information: ";
+	cout << endl << "Stop 2 information: "<< endl;
 	pTSI(stop2);
 	cout << endl << "Distance between the two stops: " << stopDistance(stop1, stop2) << " mile(s)";
 	cout << endl << "Estimated travel time: " << travelTime(stopDistance(stop1, stop2)) << " minute(s)" << endl;

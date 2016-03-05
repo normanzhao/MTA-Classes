@@ -39,8 +39,13 @@ public:
 	//shortest route
 	typedef unordered_map < string, list<string>> Graph;
 	struct vertexInf;                    // Stores information for a vertex
-
 	void shortestpaths(const Graph & g, string from, string to);
+	//map route
+	void mapRoute();
+	//lookup stops
+	void stopLookup();
+	//stop proximity
+	void stopProx();
 	//route planner
 	void planRoute();
 private:
