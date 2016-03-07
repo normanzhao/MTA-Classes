@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\..\..\Downloads\MTA_train_stop_data.txt" />
+    <Text Include="transfers.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

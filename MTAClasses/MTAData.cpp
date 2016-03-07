@@ -314,6 +314,7 @@ struct MTAData::vertexInf                    // Stores information for a vertex
 	int dist;  // distance to vertex from the source
 	string prev;  // previous node in BFS tree
 };
+//function provided
 void MTAData::shortestpaths(const Graph & g, string from, string to)
 {
 	queue<string> q;             // q is the queue of vertex numbers
@@ -353,9 +354,8 @@ void MTAData::shortestpaths(const Graph & g, string from, string to)
 	{
 		if (v.first == to)
 		{
-			cout << "vertex " << v.first << endl;
-			cout << "distance: " << v.second.dist << endl;
-			cout << "shortest path: ";
+			cout << "Total stops: " << v.second.dist << endl;
+			cout << endl <<  "Stops: ";
 			stack<string> t;
 
 			string current = v.first;
@@ -449,6 +449,8 @@ void MTAData::planRoute()
 	pTSI(stop1);
 	cout << endl << "Stop 2 information: "<< endl;
 	pTSI(stop2);
+	cout << endl << "(Transfers): " << endl;
+	shortestpaths(utSD, stop1.get_id(), stop2.get_id());
 	cout << endl << "Distance between the two stops: " << stopDistance(stop1, stop2) << " mile(s)";
 	cout << endl << "Estimated travel time: " << travelTime(stopDistance(stop1, stop2)) << " minute(s)" << endl;
 }

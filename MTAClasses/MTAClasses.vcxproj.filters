@@ -45,5 +45,8 @@
     <Text Include="..\..\..\..\Downloads\MTA_train_stop_data.txt">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="transfers.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
